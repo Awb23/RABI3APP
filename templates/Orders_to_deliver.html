@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders to Deliver</title>
+</head>
+<body>
+    <h1>Orders to Deliver</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>User</th>
+                <th>Product</th>
+                <th>Amount</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.user.username }}</td>
+                <td>{{ order.produit.name }}</td>
+                <td>{{ order.total }}</td>
+                <td>{{ order.user.clien.address }}</td>  <!-- Assuming user has a related clien model with address -->
+                <td>
+                    <form action="{% url 'deliver_order' order.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Mark as Delivered</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

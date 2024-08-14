@@ -1,0 +1,17 @@
+<!-- templates/pay_fail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed</title>
+</head>
+<body>
+    <h1>Payment Failed</h1>
+    <p>{{ message }}</p>
+    <p>Order ID: {{ order.id }}</p>
+    <p><a href="{% url 'cart' %}">Return to Cart</a></p>
+    <!-- Optionally provide a link or button to retry payment -->
+    <!-- You might need to generate a new payment link or redirect to the checkout page -->
+</body>
+</html>

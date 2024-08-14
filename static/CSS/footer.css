@@ -1,0 +1,66 @@
+.footer {
+    background-color: #343a40;
+    color: white;
+    padding: 1,5rem 0;
+}
+
+.footer .links {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.footer .links li {
+    margin-bottom: 10px;
+}
+
+.footer .links a {
+    color: white;
+    transition: color 0.2s;
+}
+
+.footer .links a:hover {
+    text-decoration: none;
+    color: #152F4F; /* Darker color for hover */
+}
+
+.footer .about-company i {
+    font-size: 25px;
+    margin-right: 15px;
+}
+
+.footer .about-company a {
+    color: white;
+    transition: color 0.2s;
+}
+
+.footer .about-company a:hover {
+    color: #152F4F; /* Darker color for hover */
+}
+
+.footer .location i {
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.footer .location p {
+    margin-bottom: 0;
+    color: white;
+}
+
+.footer .copyright {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 20px;
+    padding-top: 10px;
+    color: white;
+}
+
+.footer .social-icons a {
+    font-size: 24px;
+    margin-right: 15px;
+    color: rgb(54, 71, 63);
+    transition: color 0.2s;
+}
+
+.footer .social-icons a:hover {
+    color: #c1113d; /* Darker color for hover */
+}

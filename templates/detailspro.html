@@ -1,0 +1,68 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block product_details %}
+  <aside class="col-lg-6">
+    <div class="border rounded-4 mb-3 d-flex justify-content-center">
+      <a data-fslightbox="mygallery" class="rounded-4" target="_blank" data-type="image" href="{{ pro.image.url }}">
+        <img style="max-width: 100%; max-height: 100vh; margin: auto;" class="rounded-4 fit" src="{{ pro.image.url }}" alt="Product Image" />
+      </a>
+    </div>
+    <div class="d-flex justify-content-center mb-3">
+      <!-- Thumbnails -->
+      {% for image in pro.images.all %}
+      <a data-fslightbox="mygallery" class="border mx-1 rounded-2" target="_blank" data-type="image" href="{{ image.url }}">
+        <img width="60" height="60" class="rounded-2" src="{{ image.url }}" alt="Product Thumbnail" />
+      </a>
+      {% endfor %}
+      <!-- End Thumbnails -->
+    </div>
+  </aside>
+
+  <main class="col-lg-6">
+    <div class="ps-lg-3">
+      <h4 class="title text-dark">
+        {{ pro.name }}
+      </h4>
+      <div class="d-flex flex-row my-3">
+        <div class="text-warning mb-1 me-2">
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fa fa-star"></i>
+          <i class="fas fa-star-half-alt"></i>
+          <span class="ms-1">4.5</span>
+        </div>
+        <span class="text-muted">
+          <i class="fas fa-shopping-basket fa-sm mx-1"></i> {{ user.order.produit.count }} orders
+        </span>
+        <span class="text-success ms-2">{{ pro.stock }} In stock</span>
+      </div>
+
+      <div class="mb-3">
+        <span class="h5">{{ pro.prix }} DH</span>
+      
+      </div>
+
+      <p>{{ pro.description }}</p>
+
+     
+      {% if user.is_authenticated %}
+      <a href="{% url "check1" pro.slug %}" class="btn btn-warning shadow-0">Buy now</a>
+      <a href="{% url 'ajoute' pro.slug %}" class="btn btn-primary shadow-0"><i class="me-1 fa fa-shopping-basket"></i>Add to cart</a>
+      <a href="{% url "check1" pro.slug %}" class="btn btn-warning shadow-0">save</a>
+     
+      {% endif %}
+    </div>
+  </main>
+
+             
+
+
+ 
+          <!-- Pills navs -->
+
+          <!-- Pills content -->
+          <div class="tab-content">
+
+            {% endblock %}

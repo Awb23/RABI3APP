@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% include "header.html" %}
+{% if add %}
+<div class="container py-5">
+    {% for add in add %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Address {{ forloop.counter }}</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Username:</strong> {{ add.user.username }}</p>
+            <p><strong>Country:</strong> {{ add.country }}</p>
+            <p><strong>Phone:</strong> {{ add.phone }}</p>
+            <p><strong>City:</strong> {{ add.city }}</p>
+            <p><strong>Address:</strong> {{ add.adress }}</p>
+            <a href="{% url 'adru' pk=add.id %}" class="btn btn-primary">Update</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+
+<a href="{% url "profile" %}"> u should entre ur adress </a>
+
+{% endif %}
+<style>
+    .card-header {
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .card-body {
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    .container {
+        max-width: 800px;
+    }
+
+    .my-5 {
+        margin-top: 3rem !important;
+        margin-bottom: 3rem !important;
+    }
+</style>
+{% endblock %}
