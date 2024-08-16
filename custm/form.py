@@ -68,3 +68,10 @@ class PASSERESETFORM(SetPasswordForm):
    pass
 class mypasswordRESETFORM(PasswordResetForm):
    email=forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
+
+# forms.py
+from django import forms
+
+class SearchForm(forms.Form):
+    query = forms.CharField(label='Search', max_length=100)
+

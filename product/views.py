@@ -223,3 +223,21 @@ def handle_ipn(sender, **kwargs):
             order_instance.save()
 
     return HttpResponse("IPN processed")
+# views.py
+from django.shortcuts import render
+from .models import prod
+from custm.form import SearchForm
+
+def search(request):
+    form = SearchForm(request.GET or None)
+    products = []
+    
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        products = prod.objects.filter(name__icontains=query)  # Adjust this filter based on your model's fields
+    
+    context = {
+        'form': form,
+        'products': products,
+    }
+    return render(request, 'search.html', context)

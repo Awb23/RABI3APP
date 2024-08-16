@@ -11,7 +11,7 @@ urlpatterns = [
     path('productpaysuccess/<int:id>/',views.payment_done, name='payment_done'),
     # Other URLs...
 
-
+ path('search/',views.search, name='search'),
 
 
 
