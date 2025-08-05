@@ -10,7 +10,7 @@ urlpatterns = [
 
     path('active_account/<uidb64>/<token>', views.active_account , name = 'verify_email'),
 
-
+path('last-product/',views.last_product, name='last_product'),
 path("accounts/sign up/",views.Sign.as_view(),name="sign" ),
 path("loug out",views.loug,name="logout" ),
 path("accounts/login/",authv.LoginView.as_view(template_name="login.html",authentication_form=LoginForm),name="login" ),
@@ -22,7 +22,7 @@ path("Passwordchanged",views.done,name="done" ),
 
 path("updateadrsse/<int:pk>",views.UpdateAddress.as_view(),name="adru" ),
 path("Password-reset/",authv.PasswordResetView.as_view(template_name="pas/Password-reset.html",form_class=mypasswordRESETFORM),name="Password-reset" ),
-
+path("editPR/",views.EDI.as_view(),name="EDIT"),
 
 path("Password-reset_done/",authv.PasswordResetDoneView.as_view(template_name="pas/Password-reset_done.html"),name="password_reset_done" ),
 

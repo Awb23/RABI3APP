@@ -16,17 +16,19 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+import os
 
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-REPLACE_THIS_WITH_A_SECURE_KEY')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-r6v-h^p&*h*c9e(=3=p_)c-=dl36-pmmoz8g0&gxr&fb895tnv"
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ "*"]
 
 
 # Application definition
@@ -40,13 +42,23 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "paypal.standard.ipn",
     "django.contrib.messages",
-    "whitenoise.runserver_nostatic",  # Only one instance here
+    "whitenoise.runserver_nostatic",  
     "django.contrib.staticfiles",
+     'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.facebook',
 ]
-
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend', 
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+      "allauth.account.middleware.AccountMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -122,8 +134,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
+
 
 
 STATIC_URL = "static/"
@@ -149,10 +160,46 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True  # Use TLS instead of SSL for Gmail
-EMAIL_HOST_USER = 'azizlahder2@gmail.com'
-EMAIL_HOST_PASSWORD = 'ylawixhqlbrkmisp'  # Make sure to use an app-specific password if 2FA is enabled
-
-DATABASES["default"]=dj_database_url.parse("postgresql://datad_user:iGeAFimBFsqcVCI4ulA31SOIiNVY9UIq@dpg-ct6ee9popnds73df6mc0-a.oregon-postgres.render.com/datad")
+EMAIL_HOST_USER = 'itsazizbob@gmail.com'
+EMAIL_HOST_PASSWORD = 'odoa belq ajyq vdjh'  # Make sure to use an app-specific password if 2FA is enabled
 
 
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+           'client_id': '251368726247-ngf1j0jbpm5v9dhtong4om78sklsp642.apps.googleusercontent.com',
+             'secret': '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',
+          
+        },
+        'SCOPE': ['profile','email',],
+         'AUTH_PARAMS': {'access_type': 'online'},
+        'METHOD': 'oauth2',
+        'VERIFIED_EMAIL': True,
+    },
+    'github': {
+        'APP': {
+            'client_id': 'Ov23libZOFWPvcTDjCRu',
+            'secret': 'eda0e93e82c7c6d0436c3df50b0d795c54440eaf',
+           
+        }
+    }
+   
+}
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
+LOGIN_REDIRECT_URL = 'profile'
+LOGIN_URL = 'login'
+SOCIALACCOUNT_AUTO_SIGNUP = True
+WSGI_APPLICATION = "djangotest.wsgi.application"
+
+
+from django.contrib.messages import constants as messages
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',  # 'danger' corresponds to Bootstrap's alert-danger
+}
 

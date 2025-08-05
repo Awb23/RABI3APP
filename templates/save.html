@@ -103,6 +103,26 @@
                 font-size: 0.8rem;
             }
         }
+
+        /* Additional media query for larger screens */
+        @media (min-width: 601px) and (max-width: 900px) {
+            .wishlist-title {
+                font-size: 1.8rem;
+            }
+
+            .wishlist-item {
+                padding: 0.9rem;
+            }
+
+            .wishlist-item a {
+                font-size: 1.05rem;
+            }
+
+            .wishlist-item button {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -113,17 +133,14 @@
             <div class="wishlist-item">
                 <a href="{% url 'seemore' pos.produit.slug %}">
                     <img src="{{ pos.produit.image.url }}" alt="{{ pos.produit.name }}">
-                    {{ pos.produit.name }}
                 </a>
-                <form method="post" action="{% url 'savete' pos.produit.slug %}">
+                <h2>{{ pos.produit.name }}</h2>
+                <form method="post" action="{% url "savete" pos.produit.slug %}">
                     {% csrf_token %}
-                    <button type="submit" title="Remove item">
-                        <i class="fas fa-trash"></i> Remove
-                    </button>
+                    <button type="submit">Remove</button>
                 </form>
             </div>
             {% endfor %}
         </div>
     </div>
 </body>
-</html>

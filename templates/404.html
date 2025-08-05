@@ -1,26 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            font-size: 50px;
-        }
-        p {
-            font-size: 20px;
-        }
-    </style>
-</head>
-<body>
-    <h1>404</h1>
-    <p>Sorry, the page you are looking for does not exist.</p>
-    <p><a href="{% url 'home' %}">Return to Home</a></p>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<div class="flex items-center justify-center min-h-screen bg-gray-100 p-6">
+    <div class="max-w-xl mx-auto text-center p-8 bg-white rounded-lg shadow-2xl">
+        
+        <h1 class="text-9xl font-extrabold text-red-600 animate-pulse">404</h1>
+        
+        <h2 class="mt-8 text-4xl font-bold text-gray-800 tracking-tight">Oops! Page Not Found</h2>
+        
+        <p class="mt-4 text-lg text-gray-600 leading-relaxed">
+            Sorry, but the page you were looking for does not exist. 
+            You can go back to the home page or try using the search bar.
+        </p>
+        
+        <a href="{% url 'home' %}" class="inline-block mt-8 px-6 py-3 bg-indigo-600 text-white font-bold rounded-full shadow-lg hover:bg-indigo-700 transform transition duration-300 ease-in-out hover:scale-105">
+            Go to Home
+        </a>
+        
+    </div>
+</div>
+
+<style>
+    /*
+      The animate-pulse utility is part of Tailwind. 
+      This custom keyframe provides a more subtle effect.
+    */
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: .5;
+      }
+    }
+
+    .animate-pulse {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+</style>
+{% endblock %}

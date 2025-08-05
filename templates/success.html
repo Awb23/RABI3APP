@@ -1,11 +1,29 @@
-{% extends "base.html" %} 
-{% block title %} Success {% endblock title%} 
-{% block content %}
-<div class="alert alert-success" role="alert">
-  Thanks for purchasing our product
-  <a
-      href="{% url 'home' %}"
-      >Go to Products</a
-    >
-</div>
-{% endblock content %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Successful!</h1>
+        <p>Thank you for your purchase, {{ user.username }}!</p>
+        <p>Your payment has been processed successfully.</p>
+        <p>Your order will be processed shortly.</p>
+        
+        <h2>Order Summary</h2>
+        <ul>
+            {% for order in cart.orders.all %}
+                <li>{{ order.produit.name }} - Quantity: {{ order.quantiti }} - Price: ${{ order.produit.price }}</li>
+            {% endfor %}
+        </ul>
+        
+        <p><strong>Total Amount: ${{ cart.total_amount }}</strong></p>
+        
+        <a href="{% url 'cart' %}">Return to Cart</a>
+        <a href="{% url 'home' %}">Continue Shopping</a>
+    </div>
+</body>
+</html>  

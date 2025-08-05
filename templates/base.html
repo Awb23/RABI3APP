@@ -5,22 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Django App{% endblock %}</title>
-    <link href="{% static 'CSS/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link href="{% static 'CSS/fontawesome.min.css' %}" rel="stylesheet">
+    <!-- Custom Styles (only if needed for non-Tailwind overrides) -->
     <link href="{% static 'CSS/footer.css' %}" rel="stylesheet">
     <link href="{% static 'CSS/styles.css' %}" rel="stylesheet">
-    <link href="{% static 'CSS/style.css' %}" rel="stylesheet">
+    <!-- Removed redundant style.css (consolidate into styles.css if needed) -->
 </head>
-<body>
-
-{% block content %}
-<!-- Your content goes here -->
-{% endblock %}
-<script src="https://js.stripe.com/v3/"></script>
-<script src="{% static 'js/jquery.min.js' %}"></script>
-<script src="{% static 'js/popper.min.js' %}"></script>
-<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-<script src="{% static 'js/mdb.min.js' %}"></script>
+<body class="bg-gray-100">
+    {% block content %}
+    <!-- Content goes here -->
+    {% endblock %}
+    <script src="https://js.stripe.com/v3/"></script>
 </body>
 </html>
 {% block paypall %}{% endblock paypall %}

@@ -1,0 +1,173 @@
+{% load static %}
+{% block content %}
+{% include "header.html" %}
+
+<!-- Filter Section -->
+<h2>Latest Products</h2>
+
+
+
+
+
+<!-- Product Card Section -->
+<section class="py-5" style="background-color: #f8f9fa;">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-3 justify-content-center">
+            {% for o in po %}
+            <div class="col mb-5">
+                <div class="card h-100 shadow-sm rounded border-0">
+                    <!-- Category Badge -->
+                    <span class="badge bg-info text-dark position-absolute mt-3 ms-3">{{ o.category.name }}</span>
+                    
+                    <!-- Product Image -->
+                    <img class="card-img-top" src="{{ o.image.url }}" alt="{{ o.name }}" style="height: 350px; object-fit: cover;" />
+                    
+                    <!-- Product Info -->
+                    <div class="card-body p-4 text-center">
+                        <h5 class="fw-bolder">{{ o.name }}</h5>
+                        <span class="text-muted">{{ o.price }} $</span>
+                    </div>
+
+                    <!-- Like/Dislike Button and Count -->
+                    {% if user.is_authenticated %}
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent d-flex justify-content-between align-items-center">
+                        <button class="like-button {% if o.user_liked %}liked{% endif %}" data-product-id="{{ o.id }}">
+                            <i class="fas {% if o.user_liked %}fa-thumbs-down{% else %}fa-thumbs-up{% endif %}"></i>
+                            <span>{% if o.user_liked %}Dislike{% else %}Like{% endif %}</span>
+                        </button>
+                        <span id="like-count-{{ o.id }}" style="margin-left: 10px;">{{ o.like_count }}</span>
+                    </div>
+                    {% endif %}
+                   
+                    <!-- View Options Button -->
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                        <div class="text-center">
+                            <a class="btn btn-outline-dark mt-auto" href="{% url 'seemore' o.slug %}">View options</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% include "main.html" %}
+{% endblock %}
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<!-- Bootstrap Bundle JS (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Styles -->
+<style>
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Like Button Styling */
+    .like-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 30px; /* Rounded button for a modern look */
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .like-button:hover {
+        background-color: #0056b3;
+        transform: scale(1.1); /* Slight zoom on hover */
+    }
+
+    /* Liked Button Color */
+    .liked {
+        background-color: #dc3545; /* Red for disliked state */
+    }
+
+    /* Like/Dislike Icon and Text */
+    .like-button i {
+        margin-right: 8px;
+        font-size: 18px;
+    }
+
+    .like-button span {
+        font-weight: bold;
+        text-transform: capitalize;
+    }
+
+    /* Count Text Styling */
+    .like-count {
+        font-weight: bold;
+    }
+
+    /* Badge Styling */
+    .badge {
+        font-size: 14px;
+        font-weight: 600;
+        background-color: #17a2b8;
+    }
+
+    /* View Options Button Styling */
+    .btn-outline-dark {
+        border-radius: 20px; /* Round corners for a smoother look */
+        transition: transform 0.2s ease;
+    }
+
+    .btn-outline-dark:hover {
+        transform: translateY(-2px); /* Slight lift on hover */
+    }
+</style>
+
+<!-- Like Button Script -->
+<script>
+    $(document).ready(function() {
+        $('.like-button').click(function(event) {
+            event.preventDefault();
+
+            var button = $(this);
+            var productId = button.data('product-id');
+
+            $.ajax({
+                url: "{% url 'like' 0 %}".replace("0", productId),  // URL to the like view
+                type: "POST",
+                data: {
+                    'csrfmiddlewaretoken': '{{ csrf_token }}',  // CSRF token for security
+                },
+                success: function(response) {
+                    if (response.liked) {
+                        button.addClass('liked');
+                        button.find('i').removeClass('fa-thumbs-up').addClass('fa-thumbs-down');  // Change to Dislike icon
+                        button.find('span').text('Dislike');
+                    } else {
+                        button.removeClass('liked');
+                        button.find('i').removeClass('fa-thumbs-down').addClass('fa-thumbs-up');  // Change to Like icon
+                        button.find('span').text('Like');
+                    }
+                    $('#like-count-' + productId).text(response.likes_count);  // Update the like count
+                },
+                error: function() {
+                    alert('Error occurred while liking the product.');
+                }
+            });
+        });
+    });
+</script>

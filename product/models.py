@@ -61,10 +61,12 @@ class Produit(models.Model):
     description = models.TextField(max_length=2000)
     images = models.ManyToManyField(ProductImage, blank=True)  # Lien vers les images du produit
     likes = models.IntegerField(default=0)
+    dislikes = models.IntegerField(default=0)
     colors = models.ManyToManyField(Color)
     sizes = models.ManyToManyField(Size)
     status=models.BooleanField(default=True)
     price = models.PositiveIntegerField()
+    created_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -134,6 +136,8 @@ class savelist(models.Model):
 class Likeprod(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     produit = models.ForeignKey(Produit, on_delete=models.CASCADE)
+    is_like = models.BooleanField(default=True) # New field to track if it's a like or a dislike
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.user} liked {self.produit.name}"
@@ -157,6 +161,9 @@ class PaymentHistory(models.Model):
     address = models.ForeignKey(userADRESS, on_delete=models.SET_NULL, null=True, blank=True)  # Lien vers l'adresse
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    produit = models.ForeignKey(Produit, on_delete=models.CASCADE)
+    quantiti = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f"Payment of {self.amount} for order {self.user}"

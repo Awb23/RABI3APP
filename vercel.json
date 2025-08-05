@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "djangotest",
+        "src": "djangotest/wsgi.py",
         "use": "@vercel/python",
         "config": {
           "maxLambdaSize": "50mb"

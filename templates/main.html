@@ -1,6 +1,7 @@
 {% load static %}
 <!-- Google Font -->
 <link href="https://fonts.googleapis.com/css?family=Abel|Lato|Open+Sans&display=swap" rel="stylesheet">
+
 <style>
     /* footer */
     #footer-main {
@@ -56,44 +57,106 @@
         background-color: #333; /* Darker background for select */
         color: #f5f5f5; /* Light grey for select text */
     }
+
+    /* Responsive Design */
+    /* For small screens (e.g., mobile) */
+    @media (max-width: 576px) {
+        #footer-main {
+            padding: 1.5rem 0;
+        }
+
+        #footer-main a {
+            font-size: 12px;
+        }
+
+        #footer-main .row {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #footer-main .col-sm-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .localization select {
+            width: 100%;
+        }
+    }
+
+    /* For medium screens (e.g., tablet) */
+    @media (max-width: 768px) {
+        #footer-main .row {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        #footer-main .col-sm-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .localization select {
+            width: 100%;
+        }
+
+        #footer-main a {
+            font-size: 13px;
+        }
+    }
+
+    /* For larger screens (e.g., desktop) */
+    @media (min-width: 769px) {
+        #footer-main .row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        #footer-main .col-sm-4 {
+            text-align: left;
+        }
+
+        #footer-main a {
+            font-size: 14px;
+        }
+
+        .localization select {
+            width: auto;
+        }
+    }
 </style>
 
 <footer id="footer-main">
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
-                <h6 class="mt-3"><a href="">NEWS</a></h6>
-                <a href="">Latest Updates</a>
-                <a href="">Announcements</a>
-                <a href="">Events</a>
+                <h6 class="mt-3">NEWS</h6>
+                <a href="{% url "last_product" %}">Latest Updates</a>
+              
             </div>
             <div class="col-sm-4">
                 <h6 class="mt-3"><a href="">SOCIAL MEDIA</a></h6>
-                <a href="#"><i class="fab fa-facebook-f"></i> Facebook</a>
-                <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
-                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="#"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                <a href="https://web.facebook.com/simo.jawhari.779/"><i class="fab fa-facebook-f"></i> Facebook</a>
+               
+                <a href="https://www.instagram.com/sa.llah009/"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://www.linkedin.com/in/aziz-lahder-0967a4316/"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
             </div>
             <div class="col-sm-4">
-                <h6 class="mt-3"><a href="">PRIVACY POLICY</a></h6>
-                <a href="">Terms of Use</a>
-                <a href="">Data Protection</a>
-                <a href="">Cookie Policy</a>
+                <h6 class="mt-3"><a href="{% url "previce" %}">PRIVACY POLICY</a></h6>
+               
             </div>
         </div>
 
         <!-- Localization Section -->
-        
+       
 
         <hr>
         <div class="row">
             <div class="col-sm-6">
+                <!-- Left side empty or add content -->
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 text-right">
+                <a href="https://github.com/zinmyoswe" style="margin-left: 1rem">Privacy Policy | @AZIZ 2024-2025</a>
             </div>
-            <hr>
-            <a href="https://github.com/zinmyoswe" style="margin-left: 1rem">Privacy Policy | @AZIZ 2024-2025</a>
         </div>
     </div>
 </footer>
-<!-- ------------------------------footer end---------------------------------- -->
+

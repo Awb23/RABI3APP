@@ -18,4 +18,4 @@ def send_verification_email(user, request):
         'user': user,
         'verification_link': verification_link,
     })
-    send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [user.email])
+    send_mail(subject, message, settings.EMAIL_HOST_USER, [user.email])

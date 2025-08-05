@@ -7,47 +7,38 @@ from product.models import Produit, PaymentHistory , Cart
 from custm.models import users, userADRESS
 from product.models import Likeprod , Banner 
 from .form import NEW, LoginForm, Profile
-from django.shortcuts import render, redirect
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth import get_user_model
-from django.contrib import messages
 from django.utils.encoding import force_bytes , force_str
 
 
 def home(request):
-    produits = Produit.objects.all()[:3]  # Khoud ghi 3 lwlin
-    banner = Banner.objects.all()  # Radi ta3tamed shi logic
+    produits = Produit.objects.all()[:3]
+    banner = Banner.objects.all()
 
     for produit in produits:
-        # Vérification si user authentifié
         if request.user.is_authenticated:
             produit.user_liked = Likeprod.objects.filter(produit=produit, user=request.user).exists()
         else:
-            produit.user_liked = False  # User machi authentifié
+            produit.user_liked = False
 
     context = {
         'po': produits,
-        'banner': banner  # Idir chi context li ghadi b banner
+        'banner': banner
     }
     return render(request, 'ap/index.html', context)
 
+def last_product(request):
+    po = Produit.objects.all().order_by('-created_at')[:3]
+    return render(request, 'last_product.html', {'po': po})
 
-
-
-
-@login_required 
+@login_required
 def loug(request):
-                      logout(request) 
-                  
-                      
-                      
-                      return redirect("home")
-    
-            
+    logout(request)
+    return redirect("home")
 
-
-from .emailv import send_verification_email  # Adjust import as needed
+from .emailv import send_verification_email
 
 class Sign(View):
     def get(self, req):
@@ -58,18 +49,15 @@ class Sign(View):
         form = NEW(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False  # Deactivate account until email is confirmed
+            user.is_active = False
             user.save()
             send_verification_email(user, request)
             messages.success(request, "Please check your email to activate your account.")
-            
         else:
             messages.warning(request, "Please correct the errors below.")
         return render(request, 'sign.html', {'form': form})
 
-
 class PROFILE(View):
-   
     def get(self, req):
         form = Profile()
         return render(req, "profile.html", {'form': form})
@@ -101,22 +89,16 @@ from product.models import order
 def adress(req):
     add = userADRESS.objects.filter(user=req.user)
     orders = order.objects.filter(user=req.user)
-   
-
-    # حساب الثمن الكلي لكل الطلبات
     total = sum(order.amount * order.quantiti for order in orders)
 
     return render(req, "adresse.html", {'add': add, "orders": orders, "tot": total})
 
-
-
 class UpdateAddress(View):
-    
     def get(self, req, pk):
         add = get_object_or_404(userADRESS, id=pk)
         form = Profile(instance=add)
         return render(req, "update.html", {'form': form})
-   
+
     def post(self, req, pk):
         add = get_object_or_404(userADRESS, id=pk)
         form = Profile(req.POST, instance=add)
@@ -127,7 +109,6 @@ class UpdateAddress(View):
         else:
             messages.warning(req, "Please correct the errors below.")
         return render(req, "update.html", {'form': form})
-
 
 def done(req):
     return render(req, "changepassword.html")
@@ -147,5 +128,26 @@ def active_account(request, uidb64, token):
     else:
         messages.error(request, 'The confirmation link was invalid, possibly because it has already been used.')
         return redirect('login')
-    
 
+from .form import PRFM
+
+class EDI(View):
+    def get(self, req):
+        add = req.user
+        form = PRFM(instance=add)
+        return render(req, "editpro.html", {'form': form})
+
+    def post(self, req):
+        add = req.user
+        form = PRFM(req.POST, req.FILES, instance=add)
+
+        if form.is_valid():
+            ins = form.save(commit=False)
+            add.username = ins.username
+            add.age = ins.age
+            ins.save()
+            add.save()
+
+            return redirect('profile')
+        else:
+            return render(req, "editpro.html", {'form': form})

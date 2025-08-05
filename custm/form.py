@@ -30,6 +30,10 @@ class RESETFORM(PasswordChangeForm):
     class Meta:
         model = users
         fields = ('old_password', 'new_password1', 'new_password2')
+class PRFM(forms.ModelForm):
+     class Meta:
+        model = users
+        fields = ['username',"age"]    
 
 class Profile(forms.ModelForm):
     class Meta:

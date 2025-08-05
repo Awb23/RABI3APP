@@ -2,110 +2,86 @@
 {% load static %}
 {% block content %}
 {% include "header.html" %}
-<style>
-  .title-style {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: 700;
-    font-size: 20px;
-    color: hsl(52, 0%, 98%);
-  }
-
-  .title-quote {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-weight: 400;
-    color: hsl(52, 0%, 98%);
-  }
-
-  .bg-image {
-    position: relative;
-    background-image: url('https://mdbcdn.b-cdn.net/img/Others/extended-example/delivery.webp');
-    background-size: cover;
-    background-position: center;
-  }
-
-  .mask {
-    background-color: rgba(0, 0, 0, 0.6);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  .mask .content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-  }
-
-  .text-white {
-    color: white !important;
-  }
-</style>
-<div class="container py-5">
-  <h2 class="text-center mb-4">ENTRE YOUR ADDRESS</h2>
-  <div class="row">
-      <div class="col-sm-2 border-end">
-          <ul class="list-unstyled">
-              <li class="d-grid"><a href="{% url 'adress' %}" class="btn btn-primary mb-2">Profile</a></li>
-              <li class="d-grid"><a href="{% url 'profile' %}" class="btn btn-primary">Address</a></li>
-          </ul>
-      </div>
-<div class="container py-5">
-  <div class="row d-flex justify-content-center align-items-center">
-    <div class="col">
-      <div class="card my-4 shadow-3">
-        <div class="row g-0">
-          <div class="col-xl-6 bg-image">
-            <div class="mask">
-              <div class="content text-center">
-                <div>
-                  <i class="fas fa-truck text-white fa-3x"></i>
-                  <p class="text-white title-style">Lorem ipsum delivery</p>
-                  <figure class="text-center mb-0">
-                    <blockquote class="blockquote text-white">
-                      <p class="pb-3">
-                        <i class="fas fa-quote-left fa-xs text-primary"></i>
-                        <span class="lead font-italic">Everything at your doorstep.</span>
-                        <i class="fas fa-quote-right fa-xs text-primary"></i>
-                      </p>
-                    </blockquote>
-                  </figure>
-                </div>
-              </div>
+<div class="container mx-auto px-4 py-8">
+    <h2 class="text-3xl font-bold text-gray-900 text-center mb-6">Enter Your Address</h2>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <!-- Sidebar -->
+        <div class="col-span-1">
+            <div class="bg-white rounded-lg shadow-sm p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="{% url 'adress' %}" class="block px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-200 text-center">
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'profile' %}" class="block px-4 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors duration-200 text-center">
+                            Address
+                        </a>
+                    </li>
+                </ul>
             </div>
-          </div>
-          <div class="col-xl-6">
-            <div class="card-body p-md-5 text-black">
-              <h3 class="mb-4 text-uppercase">Delivery Info</h3>
-              <form method="POST" >
-                {% csrf_token %}
-                <div class="row">
-                  <div class="col-md-6 mb-4">
-                    {% for fm in form %}
-                      <div class="form-outline mb-4">
-                        {{ fm.label_tag }}
-                        {{ fm }}
-                        <small class="text-danger">{{ fm.errors }}</small>
-                      </div>
-                    {% endfor %}
-                  </div>
-                </div>
-                <div class="d-flex justify-content-end pt-3">
-                  <button type="submit" class="btn btn-success btn-lg ms-2" style="background-color:hsl(210, 100%, 50%)">Place order</button>
-                </div>
-              </form>
-            </div>
-          </div>
         </div>
-      </div>
+
+        <!-- Main Content -->
+        <div class="col-span-1 lg:col-span-3">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white rounded-lg shadow-sm">
+                <!-- Image Section -->
+                <div class="relative bg-cover bg-center rounded-l-lg" style="background-image: url('https://mdbcdn.b-cdn.net/img/Others/extended-example/delivery.webp');">
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center">
+                        <div class="text-center text-white">
+                            <i class="fas fa-truck fa-3x mb-4"></i>
+                            <p class="text-xl font-bold">Fast Delivery</p>
+                            <blockquote class="text-lg italic">
+                                <i class="fas fa-quote-left text-blue-400 mr-1"></i>
+                                Everything at your doorstep.
+                                <i class="fas fa-quote-right text-blue-400 ml-1"></i>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Section -->
+                <div class="p-6 lg:p-8">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4">Delivery Info</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="grid grid-cols-1 gap-4">
+                            {% for fm in form %}
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700">{{ fm.label_tag }}</label>
+                                <div class="mt-1">
+                                    {{ fm }}
+                                    {% if fm.errors %}
+                                    <p class="text-red-600 text-sm">{{ fm.errors }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="mt-6 flex justify-end">
+                            <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors duration-200">
+                                Place Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- Messages -->
+    {% if messages %}
+    <div class="mt-4">
+        {% for msg in messages %}
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 text-blue-700">
+            {{ msg }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 </div>
-{% if messages %}
-{% for msg in messages %}
-  {{ msg }}
-{% endfor %}
-{% endif %}
+
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 {% endblock content %}
