@@ -1,6 +1,6 @@
 import uuid
 import os
-import stripe
+
 import logging
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
@@ -332,7 +332,7 @@ def error_404(request, exception):
 
 import uuid
 import os
-import stripe
+
 import logging
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse

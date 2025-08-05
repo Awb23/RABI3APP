@@ -66,7 +66,8 @@ class Produit(models.Model):
     sizes = models.ManyToManyField(Size)
     status=models.BooleanField(default=True)
     price = models.PositiveIntegerField()
-    created_at = models.DateTimeField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return self.name
