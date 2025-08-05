@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +21,7 @@
         </thead>
         <tbody>
             {% for order in orders %}
+            {% if order.user.username == user.username %}
             <tr>
                 <td>{{ order.id }}</td>
                 <td>{{ order.user.username }}</td>
@@ -26,13 +29,14 @@
                 <td>{{ order.total }}</td>
                 <td>{{ order.user.clien.address }}</td>  <!-- Assuming user has a related clien model with address -->
                 <td>
-                    <form action="{% url 'deliver_order' order.id %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Mark as Delivered</button>
-                    </form>
+                    
                 </td>
             </tr>
+            {% else %}
+            pai asahbi
+            {% endif %}
             {% endfor %}
+           
         </tbody>
     </table>
 </body>

@@ -1,0 +1,129 @@
+{% include "header.html" %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .wishlist-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .wishlist-title {
+            font-size: 2rem;
+            color: #333;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .wishlist-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .wishlist-item {
+            background: #f3f3f3;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+            position: relative;
+        }
+
+        .wishlist-item:hover {
+            transform: scale(1.05);
+        }
+
+        .wishlist-item a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .wishlist-item a:hover {
+            color: #0056b3;
+        }
+
+        .wishlist-item img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .wishlist-item form {
+            margin-top: 0.5rem;
+        }
+
+        .wishlist-item button {
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .wishlist-item button:hover {
+            background-color: #c0392b;
+        }
+
+        /* Media query for small screens */
+        @media (max-width: 600px) {
+            .wishlist-title {
+                font-size: 1.5rem;
+            }
+
+            .wishlist-item {
+                padding: 0.75rem;
+            }
+
+            .wishlist-item a {
+                font-size: 1rem;
+            }
+
+            .wishlist-item button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wishlist-container">
+        <h1 class="wishlist-title">Your Wishlist</h1>
+        <div class="wishlist-items">
+            {% for pos in pos %}
+            <div class="wishlist-item">
+                <a href="{% url 'seemore' pos.produit.slug %}">
+                    <img src="{{ pos.produit.image.url }}" alt="{{ pos.produit.name }}">
+                    {{ pos.produit.name }}
+                </a>
+                <form method="post" action="{% url 'savete' pos.produit.slug %}">
+                    {% csrf_token %}
+                    <button type="submit" title="Remove item">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

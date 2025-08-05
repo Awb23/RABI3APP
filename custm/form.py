@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm , SetPasswordForm , PasswordResetForm
 from django.contrib.auth.models import User
-from .models import users, clien
+from .models import users, userADRESS
 
 class LoginForm(AuthenticationForm):
     class Meta:
@@ -33,7 +33,7 @@ class RESETFORM(PasswordChangeForm):
 
 class Profile(forms.ModelForm):
     class Meta:
-        model = clien
+        model = userADRESS
         fields = ('firstname', 'lastname', 'phone', 'adress', 'country', 'city', 'state', 'zipcode')
         widgets = {
             'firstname': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
@@ -46,11 +46,11 @@ class Profile(forms.ModelForm):
             'zipcode': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Zip Code'}),
         }
         from django import forms
-from .models import clien
+from .models import userADRESS
 
 class AddressForm(forms.ModelForm):
     class Meta:
-        model = clien
+        model = userADRESS
         fields = ['country', 'phone', 'city', 'adress']  # Ensure 'adress' is the correct field name
 
     def clean(self):
@@ -58,7 +58,7 @@ class AddressForm(forms.ModelForm):
         user = self.instance.user
        
 
-        if clien.objects.filter(
+        if userADRESS.objects.filter(
             user=user,
            
         ).exclude(id=self.instance.id).exists():

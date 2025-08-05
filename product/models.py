@@ -1,91 +1,162 @@
 from django.db import models
 from django.urls import reverse
-from djangotest.settings import AUTH_USER_MODEL
-import datetime
+from django.conf import settings
 from django.utils import timezone
-from custm.models import clien
+from django.utils.html import mark_safe
+from custm.models import userADRESS
+# Fonction pour obtenir le temps actuel
 def current_time():
     return timezone.now()
-# Create your models here.
-class prod(models.Model):
+class Banner (models.Model):
+    img = models.CharField(max_length=200)
+    alt_text=models.CharField(max_length=3000)
 
-    x=(("jewellery" , "jewellery "),
-       ("man" , "manclothes "),
-       ("women" , "womenclothes ")
-      
-       )
-    
-    name=models.CharField()
-    slug=models.SlugField(max_length=200 , default=1 , unique=True)
-    prix=models.DecimalField(max_digits=122,decimal_places=2)
-    stock=models.IntegerField()
-    image=models.ImageField(upload_to="photos/%y/%m/%d")
-    category=models.CharField(max_length=20,blank=True,choices=x)
-   
-    description=models.TextField(max_length=2000)
-    def __str__ (self):
-         return self.name
-    def get_absolute_url(self):
-          return reverse("seemore", kwargs={"slug":self.slug})
-
-
-     
-
-class Payment(models.Model):
-    user=user= models.OneToOneField(AUTH_USER_MODEL , on_delete=models.CASCADE) ,
-    amount=models.FloatField()
-    maro_pay_order_id=models.CharField(blank=True,null=True ,max_length=50)
-    maro_pay_payment_stat=models.CharField( blank=True,null=True ,max_length=50)
-    maro_pay_payment_id=models.CharField( blank=True,null=True ,max_length=50)
-    paid=models.BooleanField(default=False)
-
-from django.db import models
-from django.contrib.auth.models import User
-
-class order(models.Model):
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    produit = models.ForeignKey(prod, on_delete=models.CASCADE)
-    quantiti = models.PositiveIntegerField(default=1)
-    status = models.CharField(max_length=20, default='Pending')  # Ajouter un champ status
+# Modèle pour les images de produits
+class ProductImage(models.Model):
+    image = models.ImageField(upload_to='products/images/thumbnails/')
 
     def __str__(self):
-        return f"Order {self.id} by {self.user.username}"
+        return self.image.url
+class Color(models.Model):
+    name = models.CharField(max_length=50)
+    hex_code = models.CharField(max_length=7) 
+    
 
-     
-from django.db import models
+    def __str__(self):
+        return self.name
 
-class DELE(models.Model):
-    STATUS_CHOICES = [
-        ('paid', 'Paid'),
-        ('pending', 'Pending'),
-        ('shipped', 'Shipped'),
+class Size(models.Model):
+    name = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.name    
+    
+class Brand(models.Model):
+    name = models.CharField(max_length=10)  
+    image = models.ImageField(upload_to='products/')  
+class Category(models.Model):
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to="photos/%y/%m/%d")
+    def __str__(self):
+        return self.name
+
+
+    
+# Modèle pour les produits
+class Produit(models.Model):
+    CATEGORY_CHOICES = [
+        ("jewellery", "jewellery"),
+        ("man", "manclothes"),
+        ("women", "womenclothes"),
+        ("other", "other"),
+        ("football", "football"),
     ]
+    
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(max_length=200, unique=True)
+  
+    stock = models.IntegerField()
+    image = models.ImageField(upload_to="photos/%y/%m/%d")
+    category = models.ForeignKey(Category,on_delete=models.CASCADE)
+    description = models.TextField(max_length=2000)
+    images = models.ManyToManyField(ProductImage, blank=True)  # Lien vers les images du produit
+    likes = models.IntegerField(default=0)
+    colors = models.ManyToManyField(Color)
+    sizes = models.ManyToManyField(Size)
+    status=models.BooleanField(default=True)
+    price = models.PositiveIntegerField()
 
-    # models.py
-from django.db import models
+    def __str__(self):
+        return self.name
+    def image_tag(self):
+        return mark_safe('<img src="%s" width="50" height="50" /> ' % (self.image.url))
 
-class DELES(models.Model):
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    produit = models.ForeignKey(prod, on_delete=models.CASCADE)
+    def get_absolute_url(self):
+        return reverse("seemore", kwargs={"slug": self.slug})
+class ProductAttr(models.Model):
+    product=models.ForeignKey(Produit, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE)
+   
+
+    def __str__(self):
+        return self.product.name
+# Modèle pour les transactions PayPal
+
+
+
+# Modèle pour les commandes
+class order(models.Model):
+    PENDING = "P"
+    COMPLETED = "D"
+    FAILED = "F"
+
+    STATUS_CHOICES = (
+        (PENDING, "Pending"),
+        (COMPLETED, "delevred"),
+        (FAILED, "Failed"),
+    )
+   
+  
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    adress=models.ForeignKey(userADRESS, on_delete=models.CASCADE)
+    produit = models.ForeignKey(Produit, on_delete=models.CASCADE)
     quantiti = models.PositiveIntegerField(default=1)
-    status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Paid', 'Paid'), ('Shipped', 'Shipped')])
-    # Add the missing fields
-    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-
+    status=models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Montant de la commande
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)  # Total de la commande
 
     def __str__(self):
         return f"Order {self.id} by {self.user.username}"
 
-class PQU(models.Model):
-     user= models.OneToOneField(AUTH_USER_MODEL , on_delete=models.CASCADE) 
-     orders= models.ManyToManyField(order )  
-     created_at = models.DateTimeField(default=current_time)
+# Modèle pour le panier
+class Cart(models.Model):
+    user =models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
+    orders = models.ManyToManyField(order)  
+ 
+    created_at = models.DateTimeField(default=current_time)
 
-     def __str__ (self):
-         return self.user.username
-    
+    def __str__(self):
+        return self.user.username
+
+
+
+
+# Modèle pour les listes de souhaits
 class savelist(models.Model):
-     user= models.ForeignKey(AUTH_USER_MODEL , on_delete=models.CASCADE) 
-     produit= models.ForeignKey(prod , on_delete=models.CASCADE)
-    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) 
+    produit = models.ForeignKey(Produit, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username}'s wishlist"
+
+# Modèle pour les likes de produits
+class Likeprod(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    produit = models.ForeignKey(Produit, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user} liked {self.produit.name}"
+
+class PaymentHistory(models.Model):
+    PENDING = "P"
+    COMPLETED = "C"
+    FAILED = "F"
+
+    STATUS_CHOICES = (
+        (PENDING, "Pending"),
+        (COMPLETED, "Completed"),
+        (FAILED, "Failed"),
+    )
+
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    ooder = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    stripe_payment_id = models.CharField(max_length=255, blank=True, null=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    payment_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default=PENDING)
+    address = models.ForeignKey(userADRESS, on_delete=models.SET_NULL, null=True, blank=True)  # Lien vers l'adresse
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Payment of {self.amount} for order {self.user}"

@@ -4,9 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.exceptions import ValidationError
 from djangotest.settings import AUTH_USER_MODEL
-x=(("agadir","agadir"),
-   ("rabat","rabat"),
-   ("marrakech","marakech"))
+
 # Create your models here.
 class users(AbstractUser):
     age=models.CharField( max_length=50)
@@ -14,7 +12,8 @@ class users(AbstractUser):
   
 
 
-class clien(models.Model):
+
+class userADRESS(models.Model):
     user=models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE , blank=True)
     firstname=models.CharField( max_length=50)
     lastname=models.CharField( max_length=50)
@@ -23,7 +22,7 @@ class clien(models.Model):
     country=models.CharField(max_length=50)
     city=models.CharField(max_length=50)
     zipcode=models.IntegerField()
-    state=models.CharField(choices=x, max_length=50)
+    state=models.CharField( max_length=50)
     def __str__(self):
         return self.state 
     

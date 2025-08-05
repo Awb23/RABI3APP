@@ -1,20 +1,79 @@
 {% load static %}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css" rel="stylesheet" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM4j9n8nTLiw1FfC7JGmOlYx1w6FTLbhEh8av3A" crossorigin="anonymous">
 <link href="{% static "CSS/footer.css" %}" rel="stylesheet">
-<script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous">
-    </script>
-<style>
 
-</style>
+<footer class="footer bg-dark">
+    <div class="container text-center">
+        <h2 class="text-white">Stay Connected</h2>
+        
+        <!-- Localization Section -->
+       
 
-<footer class="py-5 bg-dark">
-    <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p>
+        <ul class="social-icons">
+            <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a></li>
+        </ul>
+        <p class="m-0 text-white">Copyright &copy; Your Website 2023</p>
     </div>
 </footer>
-</div>
 
+<style>
+.footer {
+    padding: 30px 0;
+    background-color: #333;
+}
 
-{% block content %}
-{% endblock content %}
+h2 {
+    margin-bottom: 20px;
+}
+
+.localization {
+    margin-bottom: 20px;
+}
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons li {
+    margin: 0 10px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5rem;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #ffd700; /* Change color on hover */
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1rem;
+    color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .social-icons a {
+        font-size: 1.2rem; /* Adjusted for smaller screens */
+    }
+
+    .footer p {
+        font-size: 0.9rem;
+    }
+}
+</style>

@@ -3,59 +3,119 @@
 {% block content %}
 {% load static %}
 
-
-
 {% include "header.html" %}
+
+<!-- CSS Styles -->
 <style>
-   
+    body {
+        background-color: #f8f9fa;
+        font-family: Arial, sans-serif;
+    }
+
+    .category-header {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .category-header h2 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 15px;
+    }
+
+    .category-header p {
+        font-size: 1.2rem;
+        color: #666;
+    }
+
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .text-muted {
+        font-weight: bold;
+        font-size: 1.2em;
+        color: #007bff;
+    }
+
+    .card-img-top {
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .badge {
+        background-color: #007bff;
+        color: white;
+        font-size: 0.9rem;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+
+    .btn {
+        border-radius: 5px;
+        padding: 10px 15px;
+        font-size: 1rem;
+    }
+
+    .btn-outline-dark {
+        color: #333;
+        border: 1px solid #333;
+    }
+
+    .btn-outline-dark:hover {
+        background-color: #333;
+        color: white;
+    }
+
+    .bg-light {
+        background-color: #ffffff;
+    }
 </style>
 
+<!-- Section for Products -->
 
-
-<!-- User-specific content -->
-{{ user.username }}
-
-
-<!-- Header-->
-
-
-<!-- Section-->
-<section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+        
+            <!-- Color Filter -->
+           
+        
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-            {% if product %}
-            {% for o in product %}
-          
-            <div class="col mb-5">
-                <div class="card h-100">
-                    <!-- Product image-->
-                    <img class="card-img-top" src="{{ o.image.url }}" alt="Product Image" />
-                    <!-- Product details-->
-                    <div class="card-body p-4">
-                        <div class="text-center">
-                            <!-- Product name-->
+            {% if prod %}
+                {% for o in prod %}
+                <div class="col mb-5">
+                    <div class="card h-100 shadow-sm rounded">
+                        <!-- Product image -->
+                        <img class="card-img-top" src="{{ o.image.url }}" alt="{{ o.name }}" />
+                        <!-- Category badge -->
+                        <span class="badge">{{ o.category.name }}</span>
+                        <!-- Product details -->
+                        <div class="card-body p-4 text-center">
                             <h5 class="fw-bolder">{{ o.name }}</h5>
-                            <!-- Product price-->
-                            <span>{{ o.prix }}DH</span>
+                            <span class="text-muted">{{ o.prix }} DH</span>
                         </div>
-                    </div>
-                    <!-- Product actions-->
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="{% url 'seemore' o.slug %}">View options</a>
+                        <!-- Product actions -->
+                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                            <div class="text-center">
+                                <a class="btn btn-outline-dark mt-auto" href="{% url 'seemore' o.slug %}">View options</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-         
-            {% endfor %}
+                {% endfor %}
             {% else %}
-            <p> pas de category </p>
+                <p>No products found in this category.</p>
             {% endif %}
         </div>
     </div>
 </section>
 
-<!-- Footer-->
-{% include "footer.html" %}
+<!-- Footer -->
+{% include "main.html" %}
 {% endblock %}

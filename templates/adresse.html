@@ -3,29 +3,82 @@
 
 {% block content %}
 {% include "header.html" %}
-{% if add %}
+
 <div class="container py-5">
-    {% for add in add %}
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="mb-0">Address {{ forloop.counter }}</h5>
+    <h2 class="text-center mb-4">User Addresses and Orders</h2>
+    <div class="row">
+        <div class="col-sm-2 border-end">
+            <ul class="list-unstyled">
+                <li class="d-grid"><a href="{% url 'adress' %}" class="btn btn-primary mb-2">Profile</a></li>
+                <li class="d-grid"><a href="{% url 'profile' %}" class="btn btn-primary">Address</a></li>
+            </ul>
         </div>
-        <div class="card-body">
-            <p><strong>Username:</strong> {{ add.user.username }}</p>
-            <p><strong>Country:</strong> {{ add.country }}</p>
-            <p><strong>Phone:</strong> {{ add.phone }}</p>
-            <p><strong>City:</strong> {{ add.city }}</p>
-            <p><strong>Address:</strong> {{ add.adress }}</p>
-            <a href="{% url 'adru' pk=add.id %}" class="btn btn-primary">Update</a>
+        <div class="col-sm-10">
+            {% if add %}
+                <h4>Your Addresses</h4>
+                {% for add in add %}
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Address {{ forloop.counter }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Username:</strong> {{ add.user.username }}</p>
+                            <p><strong>Country:</strong> {{ add.country }}</p>
+                            <p><strong>Phone:</strong> {{ add.phone }}</p>
+                            <p><strong>City:</strong> {{ add.city }}</p>
+                            <p><strong>Address:</strong> {{ add.address }}</p>
+                            <a href="{% url 'adru' pk=add.id %}" class="btn btn-primary">Update</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning" role="alert">
+                    <strong>Warning!</strong> You should enter your address.
+                    <a href="{% url 'profile' %}" class="alert-link">Click here to add your address.</a>
+                </div>
+            {% endif %}
+
+            <hr class="my-5">
+
+            <h4>Your Orders</h4>
+            {% if orders %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.id }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td>
+                                        <span class="badge {% if order.status == 'Completed' %}bg-success{% elif order.status == 'Pending' %}bg-warning{% else %}bg-danger{% endif %}">
+                                            {{ order.status }}
+                                        </span>
+                                    </td>
+                                    <td>{{ order.amount }} USD</td>
+                                    <td>{{ order.quantity }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <div class="alert alert-info" role="alert">
+                    You have no orders yet.
+                </div>
+            {% endif %}
         </div>
     </div>
-    {% endfor %}
 </div>
-{% else %}
 
-<a href="{% url "profile" %}"> u should entre ur adress </a>
-
-{% endif %}
 <style>
     .card-header {
         background-color: #f8f9fa;

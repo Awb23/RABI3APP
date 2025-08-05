@@ -1,0 +1,76 @@
+{% load static %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/fontawesome.min.css" rel="stylesheet" integrity="sha384-k6RqeWeci5ZR/Lv4MR0sA0FfDOM4j9n8nTLiw1FfC7JGmOlYx1w6FTLbhEh8av3A" crossorigin="anonymous">
+<link href="{% static 'CSS/footer.css' %}" rel="stylesheet">
+
+<footer class="footer bg-dark text-center">
+    <div class="container">
+        <h2 class="text-white">Stay Connected</h2>
+        <ul class="social-icons">
+            <li><a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a></li>
+            <li><a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+            <li><a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a></li>
+        </ul>
+        <p class="m-0 text-white">Copyright &copy; Your Website 2023</p>
+    </div>
+</footer>
+
+<style>
+.footer {
+    padding: 30px 0;
+    background-color: #333; /* Dark background to match the header */
+}
+
+h2 {
+    margin-bottom: 20px;
+    font-size: 2rem; /* Larger font for better visibility */
+}
+
+.social-icons {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons li {
+    margin: 0 10px;
+}
+
+.social-icons a {
+    color: white;
+    font-size: 1.5rem; /* Consistent icon size */
+    transition: color 0.3s, transform 0.3s; /* Added transition for scale */
+}
+
+.social-icons a:hover {
+    color: #ffd700; /* Gold color on hover */
+    transform: scale(1.1); /* Slightly enlarge icons on hover */
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1rem;
+    color: #fff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.5rem; /* Smaller header for mobile */
+    }
+
+    .social-icons a {
+        font-size: 1.2rem; /* Adjusted icon size for smaller screens */
+    }
+
+    .footer p {
+        font-size: 0.9rem; /* Smaller copyright text */
+    }
+}
+</style>
+
+{% block content %}
+{% endblock content %}

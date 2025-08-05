@@ -1,0 +1,8 @@
+<!-- emails/verification_email.html -->
+{% autoescape off %}
+Hi {{ user.username }},
+Please click the link below to confirm your email address and activate your account:
+{{ verification_link }}
+Thanks,
+The Team
+{% endautoescape %}

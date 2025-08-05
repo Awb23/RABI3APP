@@ -8,7 +8,7 @@ urlpatterns = [
    
 
 
-
+    path('active_account/<uidb64>/<token>', views.active_account , name = 'verify_email'),
 
 
 path("accounts/sign up/",views.Sign.as_view(),name="sign" ),
@@ -27,7 +27,7 @@ path("Password-reset/",authv.PasswordResetView.as_view(template_name="pas/Passwo
 path("Password-reset_done/",authv.PasswordResetDoneView.as_view(template_name="pas/Password-reset_done.html"),name="password_reset_done" ),
 
 
-path("Password-reset_conferme/<uidb64>/<token>",authv.PasswordResetConfirmView.as_view(template_name="pas/contact.html",form_class=PASSERESETFORM),name="password_reset_confirm" ),
+path("Password-reset_conferme/<uidb64>/<token>",authv.PasswordResetConfirmView.as_view(template_name="pas/respaswd.html",form_class=PASSERESETFORM),name="password_reset_confirm" ),
 
 path("Password-reset_complete/",authv.PasswordResetCompleteView.as_view(template_name="pas/Password-reset_complete.html" ),name="password_reset_complete" ),
 

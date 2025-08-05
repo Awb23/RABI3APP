@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.contrib import admin
 
 # Register your models here.
-from . models import users , clien
+from . models import users , userADRESS
 
 admin.site.register(users)
-admin.site.register(clien)
+admin.site.register(userADRESS)

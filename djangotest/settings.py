@@ -32,20 +32,18 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
- "custm.apps.CustmConfig",
+    "custm.apps.CustmConfig",
     "product.apps.ProductConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
-   'paypal.standard.ipn',
+    "paypal.standard.ipn",
     "django.contrib.messages",
-     "whitenoise.runserver_nostatic",
+    "whitenoise.runserver_nostatic",  # Only one instance here
     "django.contrib.staticfiles",
-    "whitenoise.runserver_nostatic"
- 
-    
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -138,6 +136,7 @@ LOGIN_REDIRECT_URL="profile"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+import dj_database_url
 
 AUTH_USER_MODEL="custm.users"
 EMAIL_BACKEND="django.core.mail.backends.console.EmailBackend"
@@ -145,13 +144,15 @@ PAYPAL_RECEIVER_EMAIL="awti6565@gmail.com"
 PAYPAL_TEST=True
 # settings.py
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# settings.py
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'a.lahder3105@uca.ac.ma'
-EMAIL_HOST_PASSWORD = '123123@2006'  # Replace with your actual Gmail password or app password
-DEFAULT_FROM_EMAIL = 'a.lahder3105@uca.ac.ma'
+EMAIL_USE_TLS = True  # Use TLS instead of SSL for Gmail
+EMAIL_HOST_USER = 'azizlahder2@gmail.com'
+EMAIL_HOST_PASSWORD = 'ylawixhqlbrkmisp'  # Make sure to use an app-specific password if 2FA is enabled
+
+DATABASES["default"]=dj_database_url.parse("postgresql://datad_user:iGeAFimBFsqcVCI4ulA31SOIiNVY9UIq@dpg-ct6ee9popnds73df6mc0-a.oregon-postgres.render.com/datad")
+
+
+

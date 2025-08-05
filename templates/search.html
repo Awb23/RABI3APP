@@ -1,20 +1,31 @@
-<!-- search_results.html -->
-<h1>Search Results</h1>
+{% extends "base.html" %}
+{% block content %}
 
-<form method="get" action="{% url 'search' %}">
-    {{ form.as_p }}
-    <button type="submit">Search</button>
-</form>
 
-{% if products %}
-    <ul>
-        {% for product in products %}
-            <li>
-                <a href="{% url 'seemore' product.slug %}">{{ product.name }}</a>
-                - {{ product.prix }}
-            </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No products found.</p>
-{% endif %}
+    <div class="row mt-4">
+        {% if products %}
+            {% for product in products %}
+            <div class="col-md-4 mb-4"> <!-- Utilise des colonnes pour une mise en page réactive -->
+                <div class="card h-100 shadow-sm rounded border-0">
+                    <img class="card-img-top" src="{{ product.image.url }}" alt="{{ product.name }}" style="height: 250px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">{{ product.description|truncatewords:15 }}</p> <!-- Description courte -->
+                        <span class="text-muted">{{ product.price }} DH</span> <!-- Prix -->
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-dark">View Details</a>
+                        <button class="like-button" data-product-id="{{ product.id }}">
+                            <i class="fas fa-thumbs-up"></i> Like
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="mt-4">No results found.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

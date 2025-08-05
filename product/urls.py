@@ -2,34 +2,60 @@ from django.urls import path
 from . import views
 
 
-
+from django.views.generic import TemplateView
 urlpatterns = [
    
 # urls.py
 
-    path('product/<slug:product_slug>/order-status/',views.product_order_status, name='product_order_status'),
-    path('productpaysuccess/<int:id>/',views.payment_done, name='payment_done'),
+    
     # Other URLs...
 
- path('search/',views.search, name='search'),
 
+       
 
+   
+
+# For IPN
+
+   
+   
+
+    
 
 path('update-quantity/<int:order_id>/', views.update_quantity, name='update_quantity'),
 
-path('paysuccess/<int:id>/', views.payment_done, name='paysuc'),
-path('payfial/<int:id>/', views.payment_fail, name='payment_fail'),
+
 path("<str:slug>",views.seemore,name="seemore" ),
  path('add-to-cart/<slug:slug>/',views.ajoutcar, name='ajoute'),
 path('contact/',views.contact_us, name='contact_us'),
 path('delete/<slug:slug>/', views.delet, name='delete'),
-path("checkout/<slug:slug>/",views.checkout1.as_view(),name="check1" ),
-path("Checkout/",views.cart_summary,name="checkout" ),
-path('orders-to-deliver/', views.orders_to_deliver, name='orders_to_deliver'),
-path('category/<slug:val>/', views.Category.as_view(), name='category'),   
+path('deletesave/<slug:slug>/', views.deletesa, name='savete'),
+path('save/<slug:slug>/', views.saveprod, name='save'),
+path('checkout/',views.checkout_view, name='checkout'),
+
+path("like/<str:pk>",views.LikePos,name="like" ),
+path('productmycart/', views.get_cart, name='cart'),
+path('category/', views.category, name='category'), 
+
+    path('success/', views.success, name='checkout_success'),
+    path('cancel/', views.cancel, name='cancel'),
+path('category/<str:val>', views.category_prod, name='category_prod'), 
+ 
+path('prodlist/', views.product_list, name='prodlist'), 
+
+path('mywish/', views.getsave, name='getsave'), 
 
 
-   
+    # autres URL...
+
+
+    path('payment/success/<int:id>/', 
+         TemplateView.as_view(template_name='payment_success.html'), 
+         name='success_payment'),  # Correct the spelling here
+         
+    path('payment/cancel/<int:id>/', 
+         TemplateView.as_view(template_name='payment_cancel.html'), 
+         name='cancel_payment'),
 
    
    
