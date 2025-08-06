@@ -23,12 +23,20 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-REPLACE_THIS_WITH_A_SECURE
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+CSRF_TRUSTED_ORIGINS = [
+    "https://web-production-68cd.up.railway.app",
+]
+
+ALLOWED_HOSTS = [
+    'web-production-68cd.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [ "*"]
 
 
 # Application definition
@@ -168,8 +176,8 @@ EMAIL_HOST_PASSWORD = 'odoa belq ajyq vdjh'  # Make sure to use an app-specific 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-           'client_id': '251368726247-ngf1j0jbpm5v9dhtong4om78sklsp642.apps.googleusercontent.com',
-             'secret': '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',
+           'client_id': '130377574223-tmekbiae9n6tesq0a1lejmf75fnhp7vt.apps.googleusercontent.com',
+             'secret': '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o',
           
         },
         'SCOPE': ['profile','email',],
@@ -179,8 +187,8 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     'github': {
         'APP': {
-            'client_id': 'Ov23libZOFWPvcTDjCRu',
-            'secret': 'eda0e93e82c7c6d0436c3df50b0d795c54440eaf',
+           'client_id': '130377574223-tmekbiae9n6tesq0a1lejmf75fnhp7vt.apps.googleusercontent.com',
+             'secret': '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o',
            
         }
     }
