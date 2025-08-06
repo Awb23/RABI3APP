@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from django.utils import timezone
+from cloudinary.models import CloudinaryField
+
 from django.utils.html import mark_safe
 from custm.models import userADRESS
 # Fonction pour obtenir le temps actuel
@@ -13,7 +15,8 @@ class Banner (models.Model):
 
 # Modèle pour les images de produits
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to='products/')
+    image = CloudinaryField('image')
+    
 
     def __str__(self):
         return self.image.url
@@ -33,10 +36,10 @@ class Size(models.Model):
     
 class Brand(models.Model):
     name = models.CharField(max_length=10)  
-    image = models.ImageField(upload_to='products/')
+    image = CloudinaryField('image')
 class Category(models.Model):
     name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='products/')
+    image = CloudinaryField('image')
     def __str__(self):
         return self.name
 
@@ -56,7 +59,7 @@ class Produit(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
   
     stock = models.IntegerField()
-    image = models.ImageField(upload_to='products/')
+    image = CloudinaryField('image')
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     description = models.TextField(max_length=2000)
     images = models.ManyToManyField(ProductImage, blank=True)  # Lien vers les images du produit
@@ -71,9 +74,11 @@ class Produit(models.Model):
 
     def __str__(self):
         return self.name
+     
     def image_tag(self):
         return mark_safe('<img src="%s" width="50" height="50" /> ' % (self.image.url))
-
+    def __str__(self):
+        return self.image.url if self.image else "No Image"  
     def get_absolute_url(self):
         return reverse("seemore", kwargs={"slug": self.slug})
 class ProductAttr(models.Model):
