@@ -1,0 +1,68 @@
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+.navbar {
+    margin-bottom: 1rem;
+}
+
+.header {
+    background-color: #343a40;
+    color: white;
+    padding: 3rem 0;
+    text-align: center;
+}
+
+.header .display-4 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.navbar-brand img {
+    max-height: 50px; /* Adjust height as needed */
+    /* Add any other CSS styles here */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-img-top {
+    border-top-left-radius: calc(0.25rem - 1px);
+    border-top-right-radius: calc(0.25rem - 1px);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-footer {
+    background-color: transparent;
+    border-top: none;
+}
+
+.btn-outline-dark {
+    border-color: #343a40;
+    color: #343a40;
+}
+
+.btn-outline-dark:hover {
+    background-color: #343a40;
+    color: white;
+}
+
+footer {
+    background-color: #343a40;
+    color: white;
+    padding: 2rem 0;
+}
+
+footer p {
+    margin: 0;
+}
