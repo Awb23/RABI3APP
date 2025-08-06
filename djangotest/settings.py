@@ -97,7 +97,7 @@ import os
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL', 'postgresql://postgres:dFAnpHtShcyxiytuvZsQhJhDWSVxyonl@shinkansen.proxy.rlwy.net:35426/railway'),
+        default=os.environ.get('DATABASE_URL', 'postgresql://postgres:PptwClqtGolfCxhUUCwAhQYYjefcGJXi@shuttle.proxy.rlwy.net:23206/railway'),
         conn_max_age=600,
         ssl_require=True
     )
