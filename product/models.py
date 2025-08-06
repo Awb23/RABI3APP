@@ -13,7 +13,7 @@ class Banner (models.Model):
 
 # Modèle pour les images de produits
 class ProductImage(models.Model):
-    image = models.ImageField(upload_to='products/images/thumbnails/')
+    image = models.ImageField(upload_to='products/')
 
     def __str__(self):
         return self.image.url
@@ -33,10 +33,10 @@ class Size(models.Model):
     
 class Brand(models.Model):
     name = models.CharField(max_length=10)  
-    image = models.ImageField(upload_to='products/')  
+    image = models.ImageField(upload_to='products/')
 class Category(models.Model):
     name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to="photos/%y/%m/%d")
+    image = models.ImageField(upload_to='products/')
     def __str__(self):
         return self.name
 
@@ -56,7 +56,7 @@ class Produit(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
   
     stock = models.IntegerField()
-    image = models.ImageField(upload_to="photos/%y/%m/%d")
+    image = models.ImageField(upload_to='products/')
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     description = models.TextField(max_length=2000)
     images = models.ManyToManyField(ProductImage, blank=True)  # Lien vers les images du produit

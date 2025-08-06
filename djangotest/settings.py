@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",  
     "django.contrib.staticfiles",
      'allauth',
+     'cloudinary',
+    'cloudinary_storage',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
@@ -220,3 +222,14 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.getenv("CLOUDINARY_CLOUD_NAME"),
+    'API_KEY': os.getenv("CLOUDINARY_API_KEY"),
+    'API_SECRET': os.getenv("CLOUDINARY_API_SECRET"),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
